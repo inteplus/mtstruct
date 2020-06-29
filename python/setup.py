@@ -10,7 +10,7 @@ setup(
     author=["Minh-Tri Pham"],
     packages=find_namespace_packages(include=['mt.*']),
     package_data={
-        'mt.struct': ['*.pyx*', '*.pxd', '../../../cpp/wordtrie.*'],
+        'mt.struct': ['*.pyx', '*.pyxbld', '*.pxd', 'cpp/wordtrie.*'],
     },
     include_package_data=True,
     zip_safe=False,

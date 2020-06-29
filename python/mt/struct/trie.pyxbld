@@ -1,9 +1,9 @@
 def make_ext(modname, pyxfilename):
     from distutils.extension import Extension
     ext = Extension(name = modname,
-        sources=[pyxfilename, 'wordtrie.cpp'],
+        sources=[pyxfilename, 'cpp/wordtrie.cpp'],
         extra_link_args=['-lboost_serialization'],
-        #extra_compile_args=['-I../../../cpp'],
+        #extra_compile_args=['-Icpp'],
         #extra_link_args=['-Lpath/to/my/custom/lib', '-lcustomlib'],
 	)
     return ext
