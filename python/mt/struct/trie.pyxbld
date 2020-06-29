@@ -1,0 +1,12 @@
+def make_ext(modname, pyxfilename):
+    from distutils.extension import Extension
+    ext = Extension(name = modname,
+        sources=[pyxfilename, '../../../cpp/wordtrie.cpp'],
+        extra_compile_args=['-I../../../cpp'],
+        extra_link_args=['-lboost_serialization'],
+        #extra_link_args=['-Lpath/to/my/custom/lib', '-lcustomlib'],
+	)
+    return ext
+
+def make_setup_args():
+    return dict(script_args=["--verbose"])
