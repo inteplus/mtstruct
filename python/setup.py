@@ -15,12 +15,12 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'mtbase>=0.4.0',  # Minh-Tri's base modules for logging and multi-threading
+        'mtbase>=0.4.1',  # Minh-Tri's base modules for logging and multi-threading
         # You need Boost.Serialization as well but only at run time.
     ],
     url='https://github.com/inteplus/mtstruct',
     project_urls={
-        'Documentation': 'https://mtstruct.readthedocs.io/en/stable/',
+        'Documentation': 'https://mtdoc.readthedocs.io/en/latest/mt.struct/mt.struct.html',
         'Source Code': 'https://github.com/inteplus/mtstruct',
     }
 )
