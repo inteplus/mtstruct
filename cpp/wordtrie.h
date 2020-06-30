@@ -37,7 +37,8 @@ private: // serialization
 
   template<class Archive>
   void save(Archive & ar, const unsigned int version) const {
-    ar & m_count & m_endofword & m_children.size();
+    size_t sz = m_children.size();
+    ar & m_count & m_endofword & sz;
     for(auto iter = m_children.begin(); iter != m_children.end(); iter++)
       ar & iter->first & *iter->second;
   }

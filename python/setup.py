@@ -16,6 +16,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'mtbase>=0.4.1',  # Minh-Tri's base modules for logging and multi-threading
+        'numpy',
         # You need Boost.Serialization as well but only at run time.
     ],
     url='https://github.com/inteplus/mtstruct',
