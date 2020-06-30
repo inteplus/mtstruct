@@ -1,7 +1,7 @@
 # distutils: language = c++
 # cython: language_level = 3
 
-from wordtrie cimport Trie_c, load_from_file, save_to_file
+from trie cimport Trie_c, load_from_file, save_to_file
 import mt.base.path as _bp
 import mt.base.threading as _bt
 
