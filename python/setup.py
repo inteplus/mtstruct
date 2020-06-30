@@ -17,7 +17,7 @@ extensions = [
     )
 ]
 
-print("Warning: You need Boost.Serialization installed to build trie.pyx.")
+print("Warning: You need to have installed Boost.Serialization to build trie.pyx.")
 
 setup(
     name='mtstruct',
