@@ -13,11 +13,8 @@ extensions = [
         name="mt.struct.trie",
         sources=["mt/struct/trie.pyx", "../cpp/wordtrie.cpp"],
         include_dirs=["../cpp/", "mt/struct"],
-        libraries=["boost_serialization"],
     )
 ]
-
-print("Warning: You need to have installed Boost.Serialization to build trie.pyx.")
 
 setup(
     name='mtstruct',

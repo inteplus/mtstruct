@@ -19,7 +19,5 @@ cdef extern from "wordtrie.h":
         double prob(const string& word)
         double cond_prob(const string& word)
 
-    void load(istream& ist, Trie_c& out_trie)
-    void save(ostream& ost, const Trie_c& in_trie)
     void load_from_file(const string& filepath, Trie_c& out_trie)
     void save_to_file(const string& filepath, const Trie_c& in_trie)

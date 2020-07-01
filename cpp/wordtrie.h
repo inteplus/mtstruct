@@ -5,9 +5,7 @@
 #include <string>
 #include <memory>
 #include <map>
-
-#include <boost/serialization/access.hpp>
-#include <boost/serialization/split_member.hpp>
+#include <iostream>
 
 
 struct TrieNode_c;
@@ -31,34 +29,15 @@ struct TrieNode_c {
   // number of descendant nodes, including this node
   int num_descendants() const;
 
-  
-private: // serialization
-  friend class boost::serialization::access;
 
-  template<class Archive>
-  void save(Archive & ar, const unsigned int version) const {
-    size_t sz = m_children.size();
-    ar & m_count & m_endofword & sz;
-    for(auto iter = m_children.begin(); iter != m_children.end(); iter++)
-      ar & iter->first & *iter->second;
-  }
-
-  template<class Archive>
-  void load(Archive & ar, const unsigned int version) {
-    size_t n; // number of children
-    ar & m_count & m_endofword & n;
-    m_children.clear();
-    while(n--) {
-      char ch;
-      TrieNode_p node = new TrieNode_c();
-      ar & ch & *node;
-      node->m_parent = this;
-      m_children[ch].reset(node);
-    }
-  }
-  
-  BOOST_SERIALIZATION_SPLIT_MEMBER()
+private: // serialisation
+  friend std::ostream & operator <<(std::ostream &out, const TrieNode_c &c);
+  friend std::istream & operator >>(std::istream &in, TrieNode_c &c);
 };
+
+// serialisation
+std::ostream& operator <<(std::ostream& out, const TrieNode_c& c);
+std::istream& operator >>(std::istream& in, TrieNode_c& c);
 
 
 struct Trie_c {
@@ -90,31 +69,14 @@ struct Trie_c {
   double cond_prob(std::string const& word) const;
 
 
-private: // serialization
-  friend class boost::serialization::access;
-
-  template<class Archive>
-  void save(Archive & ar, const unsigned int version) const {
-    ar & *m_root;
-  }
-
-  template<class Archive>
-  void load(Archive & ar, const unsigned int version) {
-    TrieNode_p node = new TrieNode_c();
-    ar & *node;
-    m_root.reset(node);
-  }
-  
-  BOOST_SERIALIZATION_SPLIT_MEMBER()
+private: // serialisation
+  friend std::ostream & operator << (std::ostream &out, const Trie_c &c);
+  friend std::istream & operator >> (std::istream &in, Trie_c &c);
 };
 
-
-// loads a trie from an std::istream
-void load(std::istream& is, Trie_c& out_trie);
-
-
-// saves a trie to an std::ostream
-void save(std::ostream& os, Trie_c const& in_trie);
+// serialisation
+std::ostream & operator << (std::ostream &out, const Trie_c &c);
+std::istream & operator >> (std::istream &in, Trie_c &c);
 
 
 // loads a trie from file

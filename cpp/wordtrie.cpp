@@ -1,12 +1,8 @@
-#include <iostream>
 #include <fstream>
 #include <cstdio>
 #include <vector>
 #include <algorithm>
 #include <cmath>
-
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
 
 #include "wordtrie.h"
 
@@ -16,6 +12,28 @@ int TrieNode_c::num_descendants() const {
   for(auto iter = m_children.begin(); iter != m_children.end(); iter++)
     cnt += iter->second->num_descendants();
   return cnt;
+}
+
+std::ostream & operator << (std::ostream &out, const TrieNode_c &c) {
+  out << c.m_count << " " << int(c.m_endofword) << " " <<  c.m_children.size() << " ";
+  for(auto iter = c.m_children.begin(); iter != c.m_children.end(); iter++)
+    out << int(iter->first) << " " << *iter->second << " ";
+  return out;
+}
+
+std::istream & operator >> (std::istream &in, TrieNode_c &c) {
+  size_t n; // number of children
+  int x;
+  in >> c.m_count >> x >> n;
+  c.m_endofword = bool(x);
+  c.m_children.clear();
+  while(n--) {
+    TrieNode_p node = new TrieNode_c();
+    in >> x >> *node;
+    node->m_parent = &c;
+    c.m_children[char(x)].reset(node);
+  }
+  return in;
 }
 
 
@@ -71,28 +89,26 @@ double Trie_c::cond_prob(std::string const& word) const {
   return ((double) node->m_count) / node->m_parent->m_count;
 }
 
-
-void load(std::istream& is, Trie_c& out_trie) {
-  boost::archive::text_iarchive ia(is);
-  ia >> out_trie;
+std::ostream& operator<<(std::ostream& out, const Trie_c& c) {
+  return out << *c.m_root;
 }
 
-
-void save(std::ostream& os, Trie_c const& in_trie) {
-  boost::archive::text_oarchive oa(os);
-  oa << in_trie;
+std::istream& operator>>(std::istream &in, Trie_c& c) {
+  TrieNode_p node = new TrieNode_c();
+  in >> *node;
+  c.m_root.reset(node);
+  return in;
 }
+
 
 
 void load_from_file(std::string const& filepath, Trie_c& out_trie) {
   std::ifstream ifs(filepath);
-  load(ifs, out_trie);
+  ifs >> out_trie;
 }
 
 
 void save_to_file(std::string const& filepath, Trie_c const& in_trie) {
   std::ofstream ofs(filepath);
-  save(ofs, in_trie);
+  ofs << in_trie;
 }
-
-
