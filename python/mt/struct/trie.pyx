@@ -5,6 +5,10 @@ from trie cimport Trie_c, load_from_file, save_to_file
 import mt.base.path as _bp
 import mt.base.threading as _bt
 
+
+__all__ = ['Trie']
+
+
 cdef class Trie:
     '''A simple word trie implemented in C++.'''
 
